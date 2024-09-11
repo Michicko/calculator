@@ -1,0 +1,91 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: monospace;
+    height: 100vh;
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calculator{
+    width: 300px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .5);
+    padding: 5px;
+    border-radius: 5px;
+    background: #e2e4e0;
+}
+
+.screen{
+    height: 100px;
+    width: 100%;
+    background: #f6f9f4;
+    border: 1px solid #f6f9f4;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 10px 5px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    font-size: 55px;
+    font-weight: 600;
+    color: #535353;
+}
+
+.screen-box{
+    padding: 5px 0;
+}
+
+.btns{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    
+}
+
+.btns button{
+    width: calc((100% - 12px) / 4);
+    padding: 20px 0;
+    font-size: 16px;
+    font-weight: 500;
+    outline: none;
+    border: none;
+    background: white;
+}
+
+
+
+.btns button.ac{
+    background: rgb(248, 33, 33);
+}
+
+.btns button.sign{
+    font-size: 24px;
+    font-weight: 500;
+    background: #bdbebc;
+}
+
+.btns button.eql{
+    flex-grow: 1;
+    background: #489ff7;
+    border-bottom-right-radius: 5px;
+}
+
+.btns button.z{
+    border-bottom-left-radius: 5px;
+}
+
+.btns button.mod, .btns button.del{
+    background: #f0a75d;
+}
+
+.btns button.ac, .btns button.mod, .btns button.del, .btns button.eql, .btns button.sign{
+    color: white;
+}
