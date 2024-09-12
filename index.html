@@ -9,29 +9,30 @@
 <body>
     <div class="calculator">
         <div class="screen-box">
-            <div class="screen">10</div>
+            <div class="screen"></div>
         </div>
         <div class="btns">
-            <button class="ac operator">AC</button>
-            <button class="operator mod">%</button>
-            <button class="operator del">DEL</button>
-            <button class="operator sign">&divide;</button>
+            <button class="ac higher-operator" data-operator="clear">AC</button>
+            <button class="operator mod" data-operator="mod">%</button>
+            <button class="higher-operator del" data-operator="delete">DEL</button>
+            <button class="operator sign" data-operator="divide">&divide;</button>
             <button>7</button>
             <button>8</button>
             <button>9</button>
-            <button class="operator sign">&times;</button>
+            <button class="operator sign" data-operator="multiply">&times;</button>
             <button>4</button>
             <button>5</button>
             <button>6</button>
-            <button class="operator sign">&plus;</button>
+            <button class="operator sign" data-operator="plus">&plus;</button>
             <button>1</button>
             <button>2</button>
             <button>3</button>
-            <button class="operator sign">&minus;</button>
+            <button class="operator sign" data-operator="minus">&minus;</button>
             <button class="z">0</button>
             <button>.</button>
-            <button class="eql operator sign">=</button>
+            <button class="eql higher-operator sign" data-operator="equals">=</button>
         </div>
     </div>
+    <script src="index.js"></script>
 </body>
 </html>
