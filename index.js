@@ -36,6 +36,7 @@ const operatorsArray = [
   {
     name: "divide",
     method: function (leftOperand, rightOperand) {
+      if(rightOperand === 0) return 'ERROR';
       return leftOperand / rightOperand;
     },
   },
@@ -75,6 +76,7 @@ function showSelectedNumbers(e) {
     }
     paintScreen(rightOperand);
     equalsBtn.disabled = false;
+    removeActiveClassFromAllOperators();
     history.push("rightOperand");
   } else {
     if (leftOperand) {
@@ -90,6 +92,9 @@ function showSelectedNumbers(e) {
 function operate(e) {
   const lastHistoryItem = history[history.length - 1];
   const target = e.target;
+  target.classList.add('active');
+  const operatorName = target.dataset.operator;
+  operator = operatorName;
 
   if(lastHistoryItem === 'currentResult'){
     leftOperand = currentResult;
@@ -97,9 +102,13 @@ function operate(e) {
     equalsBtn.disabled = false;
   }
 
-  target.classList.add('active');
-  const operatorName = target.dataset.operator;
-  operator = operatorName;
+  if(lastHistoryItem === 'rightOperand'){
+    const result = getResult();
+    leftOperand = result;
+    paintScreen(result);
+    rightOperand = null;
+  }
+  
   history.push(`${operatorName} operator`);
 }
 
