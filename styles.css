@@ -89,3 +89,11 @@ body {
 .btns button.ac, .btns button.mod, .btns button.del, .btns button.eql, .btns button.sign{
     color: white;
 }
+
+.btns button.mod.active{
+    background: #f5c595;
+}
+
+.btns button.sign.active{
+    background: #d4d4d3;
+}

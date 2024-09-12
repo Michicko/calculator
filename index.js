@@ -84,12 +84,14 @@ function showSelectedNumbers(e) {
 
 function operate(e) {
   const target = e.target;
+  target.classList.add('active');
   const operatorName = target.dataset.operator;
   operator = operatorName;
   history.push("operator");
 }
 
 function getResult() {
+  removeActiveClassFromAllOperators();
   const operatorObject = operatorsArray.find((el) => el.name === operator);
   const result = operatorObject.method(+leftOperand, +rightOperand);
   currentResult = result;
@@ -99,6 +101,10 @@ function getResult() {
   leftOperand = null;
   equalsBtn.disabled = true;
   history.push("currentResult");
+}
+
+function removeActiveClassFromAllOperators(){
+    operatorsBtn.forEach((el) => el.classList.remove('active'));
 }
 
 function deleteLastEntered() {
