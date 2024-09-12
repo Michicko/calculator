@@ -110,34 +110,39 @@ function removeActiveClassFromAllOperators(){
 function deleteLastEntered() {
   const lastHistoryItem = history[history.length - 1];
   if (lastHistoryItem === "leftOperand") {
-    if (leftOperand.length > 0) {
+    if (leftOperand.length > 1) {
       leftOperand = leftOperand.slice(0, leftOperand.length - 1);
       paintScreen(leftOperand);
     }else{
         clearHistory();
+        paintScreen(0);
     }
+    
   } else if (lastHistoryItem === "rightOperand") {
-    if (rightOperand.length > 0) {
+    if (rightOperand.length > 1) {
       rightOperand = rightOperand.slice(0, rightOperand.length - 1);
       paintScreen(rightOperand);
     }else{
         clearHistory();
+        paintScreen(0);
     }
   } else if (lastHistoryItem === "currentResult") {
     currentResult = currentResult.toString();
-    if (currentResult.length > 0) {
+    if (currentResult.length > 1) {
       currentResult = currentResult.slice(0, currentResult.length - 1);
       paintScreen(currentResult);
     }else{
         clearHistory();
+        paintScreen(0);
     }
   } else if (lastHistoryItem === "operator") {
-    if (operator.length > 0) {
+    if (operator.length > 1) {
       operator = null;
-    } else{
-        clearHistory();
+      history.pop();
     }
   }
+
+  console.log(history)
 }
 
 
@@ -146,8 +151,10 @@ function reset() {
   rightOperand = null;
   leftOperand = null;
   equalsBtn.disabled = true;
-  screen.textContent = "";
+  paintScreen(0);
 }
+
+paintScreen(0);
 
 function clearHistory() {
   history = [];
