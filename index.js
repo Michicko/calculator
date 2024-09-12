@@ -1,16 +1,19 @@
 const screen = document.querySelector(".screen");
 const btns = document.querySelectorAll("button");
+const equalsBtn = document.querySelector(".eql");
+const resetBtn = document.querySelector(".ac");
+const deleteBtn = document.querySelector(".del");
+
 const numbersBtn = [...btns].filter(
   (btn) =>
     !btn.classList.contains("operator") &&
     !btn.classList.contains("higher-operator")
 );
+
 const operatorsBtn = [...btns].filter((btn) =>
   btn.classList.contains("operator")
 );
-const equalsBtn = document.querySelector(".eql");
-const resetBtn = document.querySelector(".ac");
-const deleteBtn = document.querySelector(".del");
+
 const operatorsArray = [
   {
     name: "plus",
@@ -48,8 +51,10 @@ let leftOperand;
 let rightOperand;
 let operator;
 let currentResult;
-equalsBtn.disabled = true;
 let history = [];
+
+equalsBtn.disabled = true;
+paintScreen(0);
 
 function paintScreen(content) {
   screen.textContent = content;
@@ -83,7 +88,15 @@ function showSelectedNumbers(e) {
 }
 
 function operate(e) {
+  const lastHistoryItem = history[history.length - 1];
   const target = e.target;
+
+  if(lastHistoryItem === 'currentResult'){
+    leftOperand = currentResult;
+    currentResult = null;
+    equalsBtn.disabled = false;
+  }
+
   target.classList.add('active');
   const operatorName = target.dataset.operator;
   operator = operatorName;
@@ -91,17 +104,18 @@ function operate(e) {
 }
 
 function getResult() {
-  removeActiveClassFromAllOperators();
   const operatorObject = operatorsArray.find((el) => el.name === operator);
   const result = operatorObject.method(+leftOperand, +rightOperand);
   currentResult = result;
+  return result
+}
+
+function paintResultToScreen(){
+  removeActiveClassFromAllOperators();
+  const result = getResult();
   paintScreen(result);
-  operator = null;
-  rightOperand = null;
-  leftOperand = null;
-  equalsBtn.disabled = true;
+  reset(true);
   history.push("currentResult");
-  console.log(history)
 }
 
 function removeActiveClassFromAllOperators(){
@@ -160,15 +174,20 @@ function deleteLastEntered() {
 }
 
 
-function reset() {
+function reset(showCurrentResult) {
   operator = null;
   rightOperand = null;
   leftOperand = null;
   equalsBtn.disabled = true;
-  paintScreen(0);
+
+  if(showCurrentResult){
+    paintScreen(currentResult);
+  } else{
+    paintScreen(0);
+  }
 }
 
-paintScreen(0);
+
 
 function clearHistory() {
   history = [];
@@ -182,9 +201,9 @@ operatorsBtn.forEach((operator) => {
   operator.addEventListener("click", operate);
 });
 
-equalsBtn.addEventListener("click", getResult);
+equalsBtn.addEventListener("click", paintResultToScreen);
 
-resetBtn.addEventListener("click", reset);
+resetBtn.addEventListener("click", ()=> reset(false));
 
 deleteBtn.addEventListener("click", deleteLastEntered);
 
