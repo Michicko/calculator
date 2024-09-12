@@ -87,7 +87,7 @@ function operate(e) {
   target.classList.add('active');
   const operatorName = target.dataset.operator;
   operator = operatorName;
-  history.push("operator");
+  history.push(`${operatorName} operator`);
 }
 
 function getResult() {
@@ -101,6 +101,7 @@ function getResult() {
   leftOperand = null;
   equalsBtn.disabled = true;
   history.push("currentResult");
+  console.log(history)
 }
 
 function removeActiveClassFromAllOperators(){
@@ -109,40 +110,53 @@ function removeActiveClassFromAllOperators(){
 
 function deleteLastEntered() {
   const lastHistoryItem = history[history.length - 1];
+
+  if(!lastHistoryItem) return;
+
   if (lastHistoryItem === "leftOperand") {
-    if (leftOperand.length > 1) {
+    if (leftOperand.length > 0) {
       leftOperand = leftOperand.slice(0, leftOperand.length - 1);
       paintScreen(leftOperand);
-    }else{
-        clearHistory();
-        paintScreen(0);
+      history.pop();
+    }
+
+    if(leftOperand.length === 0){
+      paintScreen(0);
+      clearHistory();
     }
     
   } else if (lastHistoryItem === "rightOperand") {
-    if (rightOperand.length > 1) {
+    if (rightOperand.length > 0) {
       rightOperand = rightOperand.slice(0, rightOperand.length - 1);
       paintScreen(rightOperand);
-    }else{
-        clearHistory();
-        paintScreen(0);
-    }
-  } else if (lastHistoryItem === "currentResult") {
-    currentResult = currentResult.toString();
-    if (currentResult.length > 1) {
-      currentResult = currentResult.slice(0, currentResult.length - 1);
-      paintScreen(currentResult);
-    }else{
-        clearHistory();
-        paintScreen(0);
-    }
-  } else if (lastHistoryItem === "operator") {
-    if (operator.length > 1) {
-      operator = null;
       history.pop();
     }
-  }
 
-  console.log(history)
+    if(rightOperand.length === 0){
+      paintScreen(leftOperand);
+    }
+
+  } else if (lastHistoryItem === "currentResult") {
+    currentResult = currentResult.toString();
+
+    if (currentResult.length > 0) {
+      currentResult = currentResult.slice(0, currentResult.length - 1);
+      paintScreen(currentResult);
+    }
+
+    if(currentResult.length === 0){
+      paintScreen(0);
+      clearHistory();
+    }
+
+  } else if (lastHistoryItem.includes("operator")) {
+    if (operator.length > 0) {
+      operator = null;
+      history.pop();
+      removeActiveClassFromAllOperators();
+      paintScreen(leftOperand);
+    }
+  }
 }
 
 
